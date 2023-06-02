@@ -1,6 +1,8 @@
 import { Button, ContainerScroll, Header, Row, TextH4, TextInput } from "../../theme";
 import 'boxicons';
 import React from 'react';
+import Title from "../Title";
+import Alert from "../Alert";
 
 
 const Lista = () => {
@@ -15,6 +17,7 @@ const Lista = () => {
     return(
         <>
             <Header>
+                <Title titulo="Lista de Compras" />
                 <Row>
                     <TextInput 
                         className="w100" 
@@ -40,6 +43,8 @@ const Lista = () => {
                     ))
                 }
             </ContainerScroll>
+            
+            <Alert />
             
         </>
     )
