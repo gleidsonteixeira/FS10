@@ -1,14 +1,36 @@
 import { Button, ContainerScroll, Header, Row, TextH4, TextInput } from "../../theme";
 import 'boxicons';
-import React from 'react';
+import { useState } from 'react';
 import Title from "../Title";
 import Alert from "../Alert";
 
 
 const Lista = () => {
 
-    const [lista, setLista] = React.useState([]);
-    const [item, setItem] = React.useState('');
+    const [lista, setLista] = useState([]);
+    const [item, setItem] = useState('');
+    const [alerta, setAlerta] = useState({})
+
+    const inserirItem = () => {
+        let empty = item === '';
+        let exist = lista.find(cadaItem => cadaItem === item);
+        if(empty){
+            setAlerta({titulo: "Alerta:", message: "Digite algo para salvar", active: true});
+            setTimeout(() => {
+                setAlerta({titulo: alerta.titulo, message: alerta.message, active: false});
+            }, 3000);
+            return;
+        }
+        if(exist){
+            setAlerta({titulo: "Alerta:", message: "Este item já existe!", active: true});
+            setTimeout(() => {
+                setAlerta({ active: false });
+            }, 3000);
+            return;
+        }
+        setLista([...lista, item]); 
+        setItem('');
+    }
 
     const deletarItem = (fruta) => {
         setLista(lista.filter(cadaFruta => cadaFruta != fruta));
@@ -25,7 +47,7 @@ const Lista = () => {
                         value={item}
                         placeholder="Digite o produto" 
                         onChange={(e) => setItem(e.target.value)} />
-                    <Button onClick={() => {setLista([...lista, item]); setItem('');}}>
+                    <Button onClick={inserirItem}>
                         <box-icon name="plus-circle" color="white"></box-icon>
                     </Button>
                 </Row>  
@@ -43,8 +65,11 @@ const Lista = () => {
                     ))
                 }
             </ContainerScroll>
-            
-            <Alert />
+
+            <Alert 
+                titulo={alerta.titulo} 
+                message={alerta.message}
+                active={alerta.active} />
             
         </>
     )

@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Alert = () => {
+const Alert = ({ titulo = 'Titulo do alerta', message = 'Mensagem', active = false }) => {
     return(
         <>
-            <Container>
-                alerta
+            <Container className={active ? "active" : ""}>
+                <Title>{titulo}</Title>
+                <Message>{message}</Message>
             </Container>
         </>
     );
@@ -20,6 +21,25 @@ const Container = styled.div`
     left: 16px;
     border-radius: 5px;
     box-shadow: 0 5px 15px #00000015;
+    opacity: 0;
+    visibility: hidden;
+    transition-duration: 300ms;
+    &.active{
+        opacity: 1;
+        visibility: visible;
+    }
+`;
+
+const Title = styled.h5`
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+`;
+
+const Message = styled.p`
+    font-size: 14px;
+    color: #999999;
+    font-family: Arial, Helvetica, sans-serif;
 `;
 
 export default Alert;
