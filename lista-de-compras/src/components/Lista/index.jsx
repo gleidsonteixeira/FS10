@@ -3,29 +3,25 @@ import 'boxicons';
 import { useState } from 'react';
 import Title from "../Title";
 import Alert from "../Alert";
+import { useContext } from "react";
+import { LoginContext } from "../../App";
 
 
 const Lista = () => {
 
     const [lista, setLista] = useState([]);
     const [item, setItem] = useState('');
-    const [alerta, setAlerta] = useState({})
+    const {alerta, setAlerta} = useContext(LoginContext);
 
     const inserirItem = () => {
         let empty = item === '';
         let exist = lista.find(cadaItem => cadaItem === item);
         if(empty){
             setAlerta({titulo: "Alerta:", message: "Digite algo para salvar", active: true});
-            setTimeout(() => {
-                setAlerta({titulo: alerta.titulo, message: alerta.message, active: false});
-            }, 3000);
             return;
         }
         if(exist){
             setAlerta({titulo: "Alerta:", message: "Este item já existe!", active: true});
-            setTimeout(() => {
-                setAlerta({ active: false });
-            }, 3000);
             return;
         }
         setLista([...lista, item]); 
